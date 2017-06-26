@@ -1,4 +1,4 @@
-function features = extractFeaturesFromFile(sourcefile, frameTime, overlapTime)
+function [features, labels] = extractFeaturesFromFile(sourcefile, frameTime, overlapTime)
   disp(["extracting: ",sourcefile]);
   [wav, fs] = audioread(sourcefile);
 
@@ -10,6 +10,13 @@ function features = extractFeaturesFromFile(sourcefile, frameTime, overlapTime)
   overlapSize = round(overlapTime * fs);
 
   frames=buffer(wav, frameSize, overlapSize,'nodelay'); % one frame per column
+
+  % create label string
+  labels = "class,zcr,ste,min,max,iqr,median,mean,std,kurtosis,skewness";
+  for i = 1:13
+    labels = [labels,sprintf(",mfcc%d",i)];
+  endfor
+  labels = [labels, ",spectralCentroid,spectralRollOff,bandwidth,nwpd"];
 
   features = [
       zeroCrossingRate(frames);
@@ -31,4 +38,5 @@ function features = extractFeaturesFromFile(sourcefile, frameTime, overlapTime)
 
   featureDims = size(features);
   disp(sprintf("features: %d; frames: %d",featureDims(1),featureDims(2)));
+
 endfunction
