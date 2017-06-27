@@ -11,13 +11,14 @@ function [features, labels] = extractFeaturesFromFile(sourcefile, frameTime, ove
 
   frames=buffer(wav, frameSize, overlapSize,'nodelay'); % one frame per column
 
-  % create label string
+  % create label string; must correspond with features matrix below
   labels = "class,zcr,ste,min,max,iqr,median,mean,std,kurtosis,skewness";
   for i = 1:13
     labels = [labels,sprintf(",mfcc%d",i)];
   endfor
   labels = [labels, ",spectralCentroid,spectralRollOff,bandwidth,nwpd"];
 
+  % features matrix must correspond with labels string
   features = [
       zeroCrossingRate(frames);
       shortTimeEnergy(frames);
