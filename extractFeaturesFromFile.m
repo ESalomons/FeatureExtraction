@@ -13,10 +13,17 @@ function [features, labels] = extractFeaturesFromFile(sourcefile, frameTime, ove
 
   % create label string; must correspond with features matrix below
   labels = "class,zcr,ste,min,max,iqr,median,mean,std,kurtosis,skewness";
+  labels = [labels, ",spectralCentroid,spectralRollOff,bandwidth,nwpd"];
   for i = 1:13
     labels = [labels,sprintf(",mfcc%d",i)];
   endfor
-  labels = [labels, ",spectralCentroid,spectralRollOff,bandwidth,nwpd"];
+  for i = 1:12
+    labels = [labels,sprintf(",lpcc%d",i)];
+  endfor
+  for i = 1:12
+    labels = [labels,sprintf(",lsp%d",i)];
+  endfor
+
 
   % features matrix must correspond with labels string
   features = [
@@ -30,11 +37,13 @@ function [features, labels] = extractFeaturesFromFile(sourcefile, frameTime, ove
       std(frames);
       kurtosis(frames);
       skewness(frames);
-      mfcc(frames,fs);
       spectralCentroid(frames,fs);
       spectralRollOff(frames,fs);
       bandwidth(frames,fs);
-      normalizedWeightedPhaseDeviation(frames,fs)
+      normalizedWeightedPhaseDeviation(frames,fs);
+      mfcc(frames,fs);
+      lpcc(frames);
+      lsp(frames);
       ];
 
   featureDims = size(features);
