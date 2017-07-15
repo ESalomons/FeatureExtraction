@@ -10,9 +10,12 @@ function [features, labels] = extractFeaturesFromFile(sourcefile, frameTime, ove
   overlapSize = round(overlapTime * fs);
 
   frames=buffer(wav, frameSize, overlapSize,'nodelay'); % one frame per column
+  longTermTime = 1.0; % seconds
+  longTermSize = floor(longTermTime * fs);
+  nrLongTermFrames = floor((longTermSize - overlapSize) / (frameSize - overlapSize));
 
   % create label string; must correspond with features matrix below
-  labels = "class,zcr,ste,min,max,iqr,median,mean,std,kurtosis,skewness";
+  labels = "class,zcr,ste,min,max,iqr,median,mean,std,kurtosis,skewness,hzcrr";
   labels = [labels, ",spectralCentroid,spectralRollOff,bandwidth,nwpd"];
   for i = 1:13
     labels = [labels,sprintf(",mfcc%d",i)];
@@ -37,6 +40,7 @@ function [features, labels] = extractFeaturesFromFile(sourcefile, frameTime, ove
       std(frames);
       kurtosis(frames);
       skewness(frames);
+      hzcrr(frames, nrLongTermFrames);
       spectralCentroid(frames,fs);
       spectralRollOff(frames,fs);
       bandwidth(frames,fs);

@@ -3,7 +3,7 @@ addpath(genpath("."));
 function [featureMatrix,labels,classNames] = processSubCategory(subcategory,classNames)
   frameTime = 0.050; % s
   overlapTime = 0.025; %s
-  basedir = "/Users/etto/Dropbox/Sounds/";
+  basedir = "/Users/etto/Dropbox/Sounds/truncated/";
   % basedir = "/Users/etto/Desktop/tp/soundFeatures/small/";
   featureMatrix = [];
 
