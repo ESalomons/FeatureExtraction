@@ -15,7 +15,8 @@ function [features, labels] = extractFeaturesFromFile(sourcefile, frameTime, ove
   nrLongTermFrames = floor((longTermSize - overlapSize) / (frameSize - overlapSize));
 
   % create label string; must correspond with features matrix below
-  labels = "class,zcr,ste,min,max,iqr,median,mean,std,kurtosis,skewness,hzcrr";
+  labels = "class,zcr,ste,min,max,iqr,median,mean,std,kurtosis,skewness";
+  labels = [labels, ",hzcrr,lster,shimmer,jitter,F0"];
   labels = [labels, ",spectralCentroid,spectralRollOff,bandwidth,nwpd"];
   for i = 1:13
     labels = [labels,sprintf(",mfcc%d",i)];
@@ -27,6 +28,7 @@ function [features, labels] = extractFeaturesFromFile(sourcefile, frameTime, ove
     labels = [labels,sprintf(",lsp%d",i)];
   endfor
 
+  % disp(labels);
 
   % features matrix must correspond with labels string
   features = [
@@ -41,6 +43,10 @@ function [features, labels] = extractFeaturesFromFile(sourcefile, frameTime, ove
       kurtosis(frames);
       skewness(frames);
       hzcrr(frames, nrLongTermFrames);
+      lster(frames, nrLongTermFrames);
+      shimmer(frames,nrLongTermFrames);
+      jitter(frames, fs, nrLongTermFrames);
+      fundamentalFreq(frames,fs);
       spectralCentroid(frames,fs);
       spectralRollOff(frames,fs);
       bandwidth(frames,fs);

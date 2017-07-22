@@ -13,14 +13,13 @@
 % ZCR are above 1.5-fold average zero-crossing rate in an 1-s
 % window
 
-% framelength in seconds
 function hzcrrs = hzcrr(frames, framesPerWindow)
   zcrs = zeroCrossingRate(frames);
   nrWindows = ceil(length(zcrs) / framesPerWindow);
   hzcrrs = [];
   for i = 0:(nrWindows-1)
-    indLow = i * framesPerWindow + 1
-    indHi = min((i+1)*framesPerWindow, length(zcrs))
+    indLow = i * framesPerWindow + 1;
+    indHi = min((i+1)*framesPerWindow, length(zcrs));
     zcrWin = zcrs(indLow:indHi);
     hzcrr = sum(sign(zcrWin - 1.5 * mean(zcrWin)) + 1)/(2 * length(zcrWin));
     hzcrrs = [hzcrrs, hzcrr * ones(1, length(zcrWin))];
