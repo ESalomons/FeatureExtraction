@@ -17,9 +17,13 @@ function result = shimmer(frames, framesPerWindow)
     window = frameValues(indLow:indHi);
 
     N = length(window);
-    windowValue = (sum(abs(window(1:end-1) .- window(2:end)))/(N-1) ) ...
-                                /  (sum(window) / N);
-
+    sumWin = sum(window);
+    if sumWin == 0
+      windowValue = 0;
+    else
+      windowValue = (sum(abs(window(1:end-1) .- window(2:end)))/(N-1) ) ...
+                                /  (sumWin / N);
+    endif
     result = [result, windowValue * ones(1, N)];
   endfor
 endfunction
