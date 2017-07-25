@@ -4,7 +4,8 @@ function [featureMatrix,labels,classNames] = processSubCategory(subcategory,clas
   frameTime = 0.050; % s
   overlapTime = 0.025; %s
   basedir = "/Users/etto/Dropbox/Sounds/truncated/";
-  % basedir = "/Users/etto/Desktop/tp/soundFeatures/small/";
+  basedir = "/Users/etto/Desktop/tp/soundFeatures/small/";
+  basedir = "/Volumes/SAA_DATA/datasets/coopProject/selection/";
   featureMatrix = [];
 
   % retrieve categories

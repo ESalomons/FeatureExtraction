@@ -16,7 +16,7 @@ function [features, labels] = extractFeaturesFromFile(sourcefile, frameTime, ove
 
   % create label string; must correspond with features matrix below
   labels = "class,zcr,ste,min,max,iqr,median,mean,std,kurtosis,skewness";
-  labels = [labels, ",hzcrr,lster,shimmer,jitter,F0"];
+  labels = [labels, ",hzcrr,lster,shimmer,jitter,F0,spectralFlux,spectralEntropy"];
   labels = [labels, ",spectralCentroid,spectralRollOff,bandwidth,nwpd"];
   for i = 1:13
     labels = [labels,sprintf(",mfcc%d",i)];
@@ -47,6 +47,9 @@ function [features, labels] = extractFeaturesFromFile(sourcefile, frameTime, ove
       shimmer(frames,nrLongTermFrames);
       jitter(frames, fs, nrLongTermFrames);
       fundamentalFreq(frames,fs);
+      % SpectralFlux(wav,frameSize, overlapSize, fs);
+      SpectralFlux(frames,fs);
+      SpectralEntropy(frames,fs);
       spectralCentroid(frames,fs);
       spectralRollOff(frames,fs);
       bandwidth(frames,fs);

@@ -1,5 +1,5 @@
 
-function [FFT,freq]=positivePartFFT(signal,Fs,useHamming)
+function [FFT,freq]=positivePartFFT(signal,Fs,useHamming=true)
 %returns right half (absolute) of FFT with corresponding frequencies
 %x is the signal that is to be transformed
 %Fs is the sampling rate
