@@ -11,6 +11,8 @@ function result = SpectralFlux(signalMat, fs)
     FFT = FFT/max(FFT);
     result(i) = sum((FFT-FFTprev).^2);
 	endfor
-  result(1) = result(2); % doesn't make sense to have 0 as first value always
-
+	if numberOfFrames > 1
+  	result(1) = result(2); % doesn't make sense to have 0 as first value always
+	endif
+	
 endfunction

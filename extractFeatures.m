@@ -6,6 +6,8 @@ function [featureMatrix,labels,classNames] = processSubCategory(subcategory,clas
   basedir = "/Users/etto/Dropbox/Sounds/truncated/";
   basedir = "/Users/etto/Desktop/tp/soundFeatures/small/";
   basedir = "/Volumes/SAA_DATA/datasets/coopProject/selection/";
+  basedir = "/Volumes/SAA_DATA/datasets/coopProject/selectionNoSilence_th0.10_mst0.01/";
+  basedir = "/Users/etto/Dropbox/Sounds/truncatedNoSilence/";
   featureMatrix = [];
 
   % retrieve categories
@@ -40,8 +42,8 @@ endfunction
 
 %%%%%%%%%
 classNames = {};
-[ftMat1,labels,classNames] = processSubCategory("Human",classNames);
 [ftMat2, labels,classNames] = processSubCategory("objects",classNames);
+[ftMat1,labels,classNames] = processSubCategory("Human",classNames);
 
 featureMatrix = [ftMat1, ftMat2];
 
