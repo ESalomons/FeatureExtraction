@@ -6,6 +6,8 @@ clear all;
 %   considered to be silence
 function stripSilence(filename, nwFilename, thr, minSilenceTime)
   [samples, fs,] = audioread(filename);
+  samples = samples - mean(samples); 		% center around y axis
+  samples = samples / max(abs(samples)); 	% normalized
   nrSilenceVals = round(minSilenceTime * fs);
   printf('Writing %s...\n', nwFilename);
   samples2 = [];
@@ -20,7 +22,7 @@ function stripSilence(filename, nwFilename, thr, minSilenceTime)
     endif
   endwhile
   if length(samples2) > 1
-    audiowrite(nwFilename, samples2, fs);
+    audiowrite(nwFilename, samples2, fs, 'BitsPerSample', 32);
   else
     disp("nothing left in file...");
   endif
